@@ -241,8 +241,6 @@ const run = async () => {
     ),
   };
 
-  console.log(data);
-  console.log(await connection.getSlot());
   await saveDataToGitHub(JSON.stringify(data), Date.now());
 };
 
