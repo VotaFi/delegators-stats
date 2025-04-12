@@ -241,6 +241,7 @@ const run = async () => {
     ),
   };
 
+  console.log(data);
   await saveDataToGitHub(JSON.stringify(data), Date.now());
 };
 
