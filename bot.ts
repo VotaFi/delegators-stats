@@ -26,17 +26,28 @@ import BigNumber from "bignumber.js";
 const GOVERNANCE_PROGRAM = new PublicKey(
   "GovER5Lthms3bLBqWub97yVrMmEogzX7xNjdXpPPCVZw"
 );
-const GOVERNANCE_TOKEN = new PublicKey(
-  "BLZEEuZUBVqFhj8adcCFPJvPVCiCyVmh3hkJMrU8KuJA"
-);
-const GOVERNANCE_TOKEN_NAME = "BLZE";
-const GOVERNANCE_TOKEN_DECIMALS = 9;
-const REALMS_ID = new PublicKey("7vrFDrK9GRNX7YZXbo7N3kvta7Pbn6W1hCXQ6C7WBxG9");
+
 const VOTA_REALMS_DELEGATE_ADDRESS =
   "AMd2nnFYtPGkeEbUvyVtWRDkG3nrESCvNW4C43mEvWrF";
 const REALMS_VSR_PROGRAM_ID = new PublicKey(
   "vsr2nfGVNHmSY8uxoBGqq8AQbwz3JwaEaHqGbsTPXqQ"
 );
+
+export const REALMS_DELEGATIONS = [
+  {
+    slug: "solblaze",
+    name: "SolBlaze",
+    governanceProgram: new PublicKey(
+      "GovER5Lthms3bLBqWub97yVrMmEogzX7xNjdXpPPCVZw"
+    ),
+    governanceToken: new PublicKey(
+      "BLZEEuZUBVqFhj8adcCFPJvPVCiCyVmh3hkJMrU8KuJA"
+    ),
+    governanceTokenName: "BLZE",
+    governanceTokenDecimals: 9,
+    realmsId: new PublicKey("7vrFDrK9GRNX7YZXbo7N3kvta7Pbn6W1hCXQ6C7WBxG9"),
+  },
+];
 
 const saveDataToGitHub = async (data: string, timestamp: number) => {
   const octokit = new Octokit({
@@ -150,7 +161,8 @@ const getRegistrarPDA = (
 
 const realmsGetVotingPower = async (
   connection: Connection,
-  walletPK: PublicKey
+  walletPK: PublicKey,
+  realm: (typeof REALMS_DELEGATIONS)[number]
 ) => {
   try {
     const provider = new AnchorProvider(
@@ -161,8 +173,8 @@ const realmsGetVotingPower = async (
     const program = new Program(IDL, REALMS_VSR_PROGRAM_ID, provider);
 
     const { registrar } = getRegistrarPDA(
-      REALMS_ID,
-      GOVERNANCE_TOKEN,
+      realm.realmsId,
+      realm.governanceToken,
       program.programId
     );
     const { voter: voterPK } = getVoterPDA(
@@ -183,7 +195,7 @@ const realmsGetVotingPower = async (
     const votingPowerInfo = events.find((event) => event.name === "VoterInfo");
     const votingPower = votingPowerInfo
       ? new BigNumber(votingPowerInfo.data.votingPower.toString())
-          .div(new BigNumber(10 ** GOVERNANCE_TOKEN_DECIMALS))
+          .div(new BigNumber(10 ** realm.governanceTokenDecimals))
           .toNumber()
       : 0;
     return { votingPower };
@@ -193,8 +205,11 @@ const realmsGetVotingPower = async (
   }
 };
 
-const getDelegators = async (connection: Connection) => {
-  const realmFilter = pubkeyFilter(1, REALMS_ID);
+const getDelegators = async (
+  connection: Connection,
+  realm: (typeof REALMS_DELEGATIONS)[number]
+) => {
+  const realmFilter = pubkeyFilter(1, realm.realmsId);
   const hasDelegateFilter = booleanFilter(
     1 + 32 + 32 + 32 + 8 + 4 + 4 + 1 + 1 + 6,
     true
@@ -216,7 +231,8 @@ const getDelegators = async (connection: Connection) => {
     results.map(async (result) => {
       const votingPower = await realmsGetVotingPower(
         connection,
-        result.account.governingTokenOwner
+        result.account.governingTokenOwner,
+        realm
       );
       return { ...result, votingPower };
     })
@@ -227,22 +243,32 @@ const getDelegators = async (connection: Connection) => {
 
 const run = async () => {
   const connection = new Connection(process.env.RPC_URL!);
-  const delegatorsRaw = await getDelegators(connection);
-  const delegators = delegatorsRaw.map((delegate) => ({
-    pubkey: delegate.pubkey.toBase58(),
-    votingPower: delegate.votingPower.votingPower,
-  }));
+  const data = (
+    await Promise.all(
+      REALMS_DELEGATIONS.map(async (realm) => {
+        const delegatorsRaw = await getDelegators(connection, realm);
+        const delegators = delegatorsRaw.map((delegate) => ({
+          pubkey: delegate.pubkey.toBase58(),
+          votingPower: delegate.votingPower.votingPower,
+        }));
 
-  const data = {
-    delegators,
-    totalVotingPower: delegatorsRaw.reduce(
-      (acc, delegate) => acc + delegate.votingPower.votingPower,
-      0
-    ),
-  };
+        return {
+          realm: realm.slug,
+          delegators,
+          totalVotingPower: delegatorsRaw.reduce(
+            (acc, delegate) => acc + delegate.votingPower.votingPower,
+            0
+          ),
+        };
+      })
+    )
+  ).reduce((acc, val) => {
+    acc[val.realm] = val;
+    return acc;
+  }, {} as Record<string, { realm: string; delegators: { pubkey: string; votingPower: number }[]; totalVotingPower: number }>);
 
-  console.log(data);
-  await saveDataToGitHub(JSON.stringify(data), Date.now());
+  console.log(JSON.stringify(data, null, 2));
+  // await saveDataToGitHub(JSON.stringify(data), Date.now());
 };
 
 run();
