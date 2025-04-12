@@ -1,0 +1,25 @@
+{
+  "name": "vota-solblaze-stats",
+  "packageManager": "yarn@1.22.22",
+  "devDependencies": {
+    "@types/lodash": "^4.17.16",
+    "@types/node": "^22.4.1",
+    "tsx": "^4.19.1",
+    "typescript": "^5.5.4"
+  },
+  "type": "commonjs",
+  "scripts": {
+    "local": "tsx --env-file=.env bot.ts",
+    "start": "tsx bot.ts"
+  },
+  "dependencies": {
+    "@coral-xyz/anchor": "^0.29",
+    "@octokit/rest": "^21.0.2",
+    "@solana/spl-governance": "^0.3.28",
+    "@solana/web3.js": "^1.98.0",
+    "bignumber.js": "^9.2.1",
+    "bn.js": "^5.2.1",
+    "lodash": "^4.17.21",
+    "p-limit": "^6.2.0"
+  }
+}
