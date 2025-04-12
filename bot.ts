@@ -212,6 +212,9 @@ const getDelegators = async (connection: Connection) => {
     [realmFilter, hasDelegateFilter, delegatedToUserFilter]
   );
 
+  console.log(results);
+  console.log(results.length);
+
   const delegateVotingPower = await Promise.all(
     results.map(async (result) => {
       const votingPower = await realmsGetVotingPower(
