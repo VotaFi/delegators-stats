@@ -267,7 +267,7 @@ const run = async () => {
     return acc;
   }, {} as Record<string, { realm: string; delegators: { pubkey: string; votingPower: number }[]; totalVotingPower: number }>);
 
-  console.log(JSON.stringify(data, null, 2));
+  // console.log(JSON.stringify(data, null, 2));
   await saveDataToGitHub(JSON.stringify(data), Date.now());
 };
 
