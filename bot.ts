@@ -55,7 +55,7 @@ const saveDataToGitHub = async (data: string, timestamp: number) => {
   });
 
   const owner = "VotaFi";
-  const repo = "solblaze-stats";
+  const repo = "delegators-stats";
   const path = `stats.json`;
   const content = Buffer.from(data).toString("base64");
 
