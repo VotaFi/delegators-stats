@@ -162,7 +162,8 @@ const getRegistrarPDA = (
 const realmsGetVotingPower = async (
   connection: Connection,
   walletPK: PublicKey,
-  realm: (typeof REALMS_DELEGATIONS)[number]
+  realm: (typeof REALMS_DELEGATIONS)[number],
+  retryNum = 0
 ) => {
   try {
     const provider = new AnchorProvider(
@@ -193,14 +194,23 @@ const realmsGetVotingPower = async (
       voterPK
     );
     const votingPowerInfo = events.find((event) => event.name === "VoterInfo");
-    const votingPower = votingPowerInfo
-      ? new BigNumber(votingPowerInfo.data.votingPower.toString())
-          .div(new BigNumber(10 ** realm.governanceTokenDecimals))
-          .toNumber()
-      : 0;
+
+    if (!votingPowerInfo) {
+      throw new Error("No voting power info");
+    }
+
+    const votingPower = new BigNumber(
+      votingPowerInfo.data.votingPower.toString()
+    )
+      .div(new BigNumber(10 ** realm.governanceTokenDecimals))
+      .toNumber();
     return { votingPower };
   } catch (e: unknown) {
     console.log(e);
+    if (retryNum < 3) {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      return realmsGetVotingPower(connection, walletPK, realm, retryNum + 1);
+    }
     return { votingPower: 0 };
   }
 };
