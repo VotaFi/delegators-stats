@@ -49,14 +49,17 @@ export const REALMS_DELEGATIONS = [
   },
 ];
 
-const saveDataToGitHub = async (data: string, timestamp: number) => {
+const saveDataToGitHub = async (
+  path: string,
+  data: string,
+  timestamp: number
+) => {
   const octokit = new Octokit({
     auth: process.env.G_TOKEN,
   });
 
   const owner = "VotaFi";
   const repo = "delegators-stats";
-  const path = `stats.json`;
   const content = Buffer.from(data).toString("base64");
 
   try {
@@ -278,7 +281,18 @@ const run = async () => {
   }, {} as Record<string, { realm: string; delegators: { pubkey: string; votingPower: number }[]; totalVotingPower: number }>);
 
   // console.log(JSON.stringify(data, null, 2));
-  await saveDataToGitHub(JSON.stringify(data), Date.now());
+  await saveDataToGitHub("stats.json", JSON.stringify(data), Date.now());
+
+  // Cache solblaze data
+  const solblazeData = await fetch(
+    "https://rewards.solblaze.org/api/v1/gauges"
+  );
+  const solblazeDataJson = await solblazeData.json();
+  await saveDataToGitHub(
+    "solblaze.json",
+    JSON.stringify(solblazeDataJson),
+    Date.now()
+  );
 };
 
 run();
