@@ -282,7 +282,7 @@ const run = async () => {
 
   // console.log(JSON.stringify(data, null, 2));
   await saveDataToGitHub(
-    "stats-temp.json",
+    "stats.json",
     JSON.stringify(data, null, 2),
     Date.now()
   );
