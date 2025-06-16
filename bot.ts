@@ -281,7 +281,7 @@ const run = async () => {
   }, {} as Record<string, { realm: string; delegators: { pubkey: string; votingPower: number }[]; totalVotingPower: number }>);
 
   // console.log(JSON.stringify(data, null, 2));
-  await saveDataToGitHub("stats.json", JSON.stringify(data), Date.now());
+  await saveDataToGitHub("stats-temp.json", JSON.stringify(data), Date.now());
 
   // Cache solblaze data
   const solblazeData = await fetch(
