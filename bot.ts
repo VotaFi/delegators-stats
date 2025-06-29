@@ -292,11 +292,13 @@ const run = async () => {
     "https://rewards.solblaze.org/api/v1/gauges"
   );
   const solblazeDataJson = await solblazeData.json();
-  await saveDataToGitHub(
-    "solblaze.json",
-    JSON.stringify(solblazeDataJson),
-    Date.now()
-  );
+  if (solblazeDataJson.validators.length > 0) {
+    await saveDataToGitHub(
+      "solblaze.json",
+      JSON.stringify(solblazeDataJson),
+      Date.now()
+    );
+  }
 };
 
 run();
