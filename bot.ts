@@ -27,8 +27,10 @@ const GOVERNANCE_PROGRAM = new PublicKey(
   "GovER5Lthms3bLBqWub97yVrMmEogzX7xNjdXpPPCVZw"
 );
 
-const VOTA_REALMS_DELEGATE_ADDRESS =
+const VOTA_REALMS_DELEGATE_ADDRESS_OLD =
   "AMd2nnFYtPGkeEbUvyVtWRDkG3nrESCvNW4C43mEvWrF";
+const VOTA_REALMS_DELEGATE_ADDRESS =
+  "AiaNSk4H2QWetmCqtoo9qtQp9f9NnxyCB4NiTpB4pWb2";
 const REALMS_VSR_PROGRAM_ID = new PublicKey(
   "vsr2nfGVNHmSY8uxoBGqq8AQbwz3JwaEaHqGbsTPXqQ"
 );
@@ -231,8 +233,19 @@ const getDelegators = async (
     1 + 32 + 32 + 32 + 8 + 4 + 4 + 1 + 1 + 6 + 1,
     new PublicKey(VOTA_REALMS_DELEGATE_ADDRESS)
   );
-  if (!realmFilter || !delegatedToUserFilter) throw new Error(); // unclear why this would ever happen, probably it just cannot
+  const delegatedToUserFilterOld = pubkeyFilter(
+    1 + 32 + 32 + 32 + 8 + 4 + 4 + 1 + 1 + 6 + 1,
+    new PublicKey(VOTA_REALMS_DELEGATE_ADDRESS_OLD)
+  );
+  if (!realmFilter || !delegatedToUserFilter || !delegatedToUserFilterOld)
+    throw new Error(); // unclear why this would ever happen, probably it just cannot
 
+  const resultsOld = await getGovernanceAccounts(
+    connection,
+    GOVERNANCE_PROGRAM,
+    TokenOwnerRecord,
+    [realmFilter, hasDelegateFilter, delegatedToUserFilterOld]
+  );
   const results = await getGovernanceAccounts(
     connection,
     GOVERNANCE_PROGRAM,
@@ -241,7 +254,7 @@ const getDelegators = async (
   );
 
   const delegateVotingPower = await Promise.all(
-    results.map(async (result) => {
+    [...resultsOld, ...results].map(async (result) => {
       const votingPower = await realmsGetVotingPower(
         connection,
         result.account.governingTokenOwner,
