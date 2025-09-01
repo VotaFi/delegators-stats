@@ -264,7 +264,21 @@ const getDelegators = async (
     })
   );
 
-  return delegateVotingPower;
+  // Add in voting power of the addresses themselves
+  const delegateVotingPowerWithSelf = await Promise.all(
+    [VOTA_REALMS_DELEGATE_ADDRESS, VOTA_REALMS_DELEGATE_ADDRESS_OLD].map(
+      async (address) => ({
+        pubkey: new PublicKey(address),
+        votingPower: await realmsGetVotingPower(
+          connection,
+          new PublicKey(address),
+          realm
+        ),
+      })
+    )
+  );
+
+  return [...delegateVotingPower, ...delegateVotingPowerWithSelf];
 };
 
 const run = async () => {
