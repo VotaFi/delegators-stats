@@ -4,23 +4,27 @@
     "delegators": [
       {
         "pubkey": "13hghtYFXLLNqhrnbuQ2nLVi4n8NQCs5SeQXwz46DnFw",
-        "votingPower": 222335.676341043
+        "votingPower": 222306.889875178
       },
       {
         "pubkey": "14nAbZUhkGadwgJYRhxdtLY97dA9piAiA4fo9HxJJVvb",
-        "votingPower": 312854.05684417
+        "votingPower": 312805.376948623
       },
       {
         "pubkey": "28ZSHLgSRNmin7gqe8JMZYang2kSFazX7Joeh3JxSS6B",
-        "votingPower": 758464.043019514
+        "votingPower": 758443.261056043
       },
       {
         "pubkey": "2gncKy9jYCy8wHZbjKsyt1hE6G2m6H5NG6FbGB4x5xBY",
-        "votingPower": 3931194.502920237
+        "votingPower": 3931187.807488128
+      },
+      {
+        "pubkey": "2hT8WcDWjSaJHqMyHzSNxrBScS96JHjEzNYJX1q4mak7",
+        "votingPower": 4982858.637129628
       },
       {
         "pubkey": "2rbiiRXmDGZz5rmuc9pAN94jyRmP2BdqrHaGVTPJo8wH",
-        "votingPower": 5113411.885844747
+        "votingPower": 5113249.786529678
       },
       {
         "pubkey": "3ugsyJivg2J2rvUUXUvfKwzNuFrJuNg6QBB1vFnJZHvX",
@@ -28,19 +32,19 @@
       },
       {
         "pubkey": "439s1FKPd9bChH2NXV7rt6xDMDCpWUdtMWggagWNkVje",
-        "votingPower": 9347.236479642
+        "votingPower": 9347.026559002
       },
       {
         "pubkey": "4S42UJdi28Qos6mQKQv5xw59K1BCtf56BeogBmpwjTGW",
-        "votingPower": 318125.899224673
+        "votingPower": 318118.97931606
       },
       {
         "pubkey": "4aBgKFWGEGqWe8difep5qkZApPYfQ1pGWjrPBYUFm4pA",
-        "votingPower": 1304.015662717
+        "votingPower": 1303.985826625
       },
       {
         "pubkey": "4aq4Bz9fW7Dn5zPaQzjNSa8vf1yCcGodCN3RByBMzQB6",
-        "votingPower": 289935.091620126
+        "votingPower": 289911.374751961
       },
       {
         "pubkey": "5vZ2buJ6isxywYQVPpscWT1ZYpt1cNS2xawxqD3jrfNU",
@@ -52,11 +56,11 @@
       },
       {
         "pubkey": "6Ck2mhb7USvAEgQhujh1x2LDFPr91QQsv4HSHBoYgn9c",
-        "votingPower": 1934173.90724885
+        "votingPower": 1934130.265125561
       },
       {
         "pubkey": "6yXXWn95vfb4Su5ebRKfNTSSSvmXudDKYSmJt3fR2ZHy",
-        "votingPower": 7869147.273000122
+        "votingPower": 7868973.23528506
       },
       {
         "pubkey": "715ZGFdmXxyWJ3VNhqX6RPwjuqkB5HhkxSaQWC4EmkzK",
@@ -64,15 +68,15 @@
       },
       {
         "pubkey": "77yrCgfz23TPc8ic2XtKv3M1vCPLYM5j5KZvT3FMuLRM",
-        "votingPower": 136.087117722
+        "votingPower": 136.083871327
       },
       {
         "pubkey": "94zQvFL3pJbFDH2EYcU1Q2GzibnyVwJDeFYCK1AYiCJL",
-        "votingPower": 206259.748167573
+        "votingPower": 206259.655544205
       },
       {
         "pubkey": "9BRUgRfnSiNzDKyPChNRku6wXvZfYNxcSbuW4Sspctj4",
-        "votingPower": 34730.384756354
+        "votingPower": 34729.568123363
       },
       {
         "pubkey": "9FWGNF1zAR2SWv4ybvHrZ9o8EzLz5SzbKUs7PN4U2AHg",
@@ -92,7 +96,7 @@
       },
       {
         "pubkey": "9phBPg9DByf3uRedMMLfdDLxZvfEreqa7j2edx4nYiLB",
-        "votingPower": 1869595.615297513
+        "votingPower": 1869513.997198052
       },
       {
         "pubkey": "9v5yNe9eB3FK7Ztqk5PfmjmAWX3rgg2irEt931NMrfjf",
@@ -100,7 +104,7 @@
       },
       {
         "pubkey": "9x4TLAgnHMi63bfvFvEeRJmcLhrkGACbWeV9hCHsV5SQ",
-        "votingPower": 4488.923414473
+        "votingPower": 4488.466368627
       },
       {
         "pubkey": "ADMC748buP3SBB5ehYiqcFanmnYuE5BbEZXLbqDTXhzm",
@@ -108,19 +112,19 @@
       },
       {
         "pubkey": "AGG6PXHSJLJqjh78urNYB5qpoo7u5afQBAQMESsk1x7C",
-        "votingPower": 17026168.766164552
+        "votingPower": 17026127.20223761
       },
       {
         "pubkey": "AJwaidXQ3FkxB4SNmECgFGp5ZW2TNY5FeiCDmdttUBR2",
-        "votingPower": 557.18392957
+        "votingPower": 557.163147607
       },
       {
         "pubkey": "Axd9eFcbFZdAuvhSviLjJj4A9mihxxFUYZ79YzP3veWU",
-        "votingPower": 862236.889575704
+        "votingPower": 862212.918615244
       },
       {
         "pubkey": "BCC99m6k3kwhgQqCE4KYU6cbbvb66XjqjyfgSXUrgaF9",
-        "votingPower": 0.14197111
+        "votingPower": 0.141950906
       },
       {
         "pubkey": "BZ38ac7ZWYCiszihjn6Zd7pehgsDLdk9eGFKqNS5AcDF",
@@ -132,15 +136,15 @@
       },
       {
         "pubkey": "Bg8bJ64kH2gGFokjcW61NwsSnCA26PcCkpv8rJ21NwRU",
-        "votingPower": 737266.872654226
+        "votingPower": 737232.790458996
       },
       {
         "pubkey": "BzSdFiF3YksTAAQbBJYuwJPHRGL7VAwrRUNmbUeKD9di",
-        "votingPower": 133454.288522217
+        "votingPower": 133447.864022434
       },
       {
         "pubkey": "CN2bpf9RqWrForHFqCEnE9zb7ydBQ51mYC1qpZoJjodd",
-        "votingPower": 64263.340949928
+        "votingPower": 64261.967042577
       },
       {
         "pubkey": "D2BtsC39McSkmzvJsKaPYATC1Wgiv7yDCGDNHBWunahV",
@@ -148,7 +152,7 @@
       },
       {
         "pubkey": "D69tLnTiqmuRvHjbZpBi6sM2FJjnMhmYjSce7hN1EKy9",
-        "votingPower": 59651933.630920164
+        "votingPower": 59650555.6944271
       },
       {
         "pubkey": "DtRzECsNDxjHuWM1HQWba5aSTfX9XTvHL1KC6uyWGDoT",
@@ -164,11 +168,11 @@
       },
       {
         "pubkey": "FXrjjUjnrfnk51UhYbmbF8t1a7fB1h7CdttZJKkNhEYz",
-        "votingPower": 16004167.564210901
+        "votingPower": 16003807.941116568
       },
       {
         "pubkey": "FnH6Ff4NNWvRf1AY8dAwYdTRZRMt877bvjpx67gQNJqQ",
-        "votingPower": 6665.659917917
+        "votingPower": 6665.464326291
       },
       {
         "pubkey": "FnaeGdXBhif31GYWHBuvQ99V4VcFvw1GaeP2JkH4HuM1",
@@ -176,7 +180,7 @@
       },
       {
         "pubkey": "GPitGBDPeueshYzXZXtzf9EzNWx8coNUmoDc8BhSUXfd",
-        "votingPower": 830697.350456621
+        "votingPower": 830657.864726027
       },
       {
         "pubkey": "GT2aaHGzXT9iHyDRxcX6yn1fStuLFcgPJjNU28VuNU6Z",
@@ -208,15 +212,15 @@
       },
       {
         "pubkey": "7DhA5njUo8QPLzy4irqviZSY2MuLLRWy2Q4GfSLdpvzL",
-        "votingPower": 239870.192863122
+        "votingPower": 239868.663701
       },
       {
         "pubkey": "9DkCyPEpVmFzwhvABdAigDdfdYdmg5mjwo76AXz72Dn9",
-        "votingPower": 160554.713170515
+        "votingPower": 160552.634974168
       },
       {
         "pubkey": "9uDmp5zMfuGsZredsddtaQ6MsF457ySYTiWN2oxR88x4",
-        "votingPower": 4181010.146920662
+        "votingPower": 4180593.001125159
       },
       {
         "pubkey": "AedPC1vYe1k9yZ3SV49HNet9BiJfsVm21cQph4mf1ben",
@@ -224,7 +228,7 @@
       },
       {
         "pubkey": "G58RsXuaHNUoNksqyHAiYtSvnVbvPhQbeYtLwLLAvNqa",
-        "votingPower": 22292.815342464
+        "votingPower": 22292.108755706
       },
       {
         "pubkey": "G75KyDayRx64qXRA4V2DMr7tzVGk6a79G5ecwMqi1Efe",
@@ -232,11 +236,11 @@
       },
       {
         "pubkey": "Ga3XZNPqWstK1e5ar2Pp6LguAabcbGGgpNY5rN1DHMeh",
-        "votingPower": 1.825762341
+        "votingPower": 1.825715511
       },
       {
         "pubkey": "Gsk5z6oCSLGixEFBaamJBzK4BHLbWKrD4v2qqrxPaS2J",
-        "votingPower": 573.877659805
+        "votingPower": 573.762232753
       },
       {
         "pubkey": "AiaNSk4H2QWetmCqtoo9qtQp9f9NnxyCB4NiTpB4pWb2",
@@ -247,6 +251,6 @@
         "votingPower": 0
       }
     ],
-    "totalVotingPower": 268805506.28073007
+    "totalVotingPower": 273785460.0783516
   }
 }
