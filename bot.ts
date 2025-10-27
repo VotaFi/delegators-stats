@@ -295,12 +295,12 @@ const run = async () => {
   const voters = await getVoters(client, "theVault");
   const vaultVoters = voters.map((voter) => ({
     pubkey: voter.escrowAddress.toString(),
-    votingPower: voter.voterPower.toString(),
+    votingPower: Number(voter.voterPower) / 1e6,
   }));
   const vaultData = {
     tribeca: "theVault",
     delegators: vaultVoters,
-    totalVotingPower: voters.reduce((acc, voter) => acc + Number(voter.voterPower / BigInt(1e6)), 0),
+    totalVotingPower: vaultVoters.reduce((acc, voter) => acc + voter.votingPower, 0),
   }
 
   await saveDataToGitHub(
