@@ -246,49 +246,49 @@ const getDelegators = async (
 
 const run = async () => {
   const connection = new Connection(process.env.RPC_URL!);
-  // const data = (
-  //   await Promise.all(
-  //     REALMS_DELEGATIONS.map(async (realm) => {
-  //       const delegatorsRaw = await getDelegators(connection, realm);
-  //       const delegators = delegatorsRaw.map((delegate) => ({
-  //         pubkey: delegate.pubkey.toBase58(),
-  //         votingPower: delegate.votingPower.votingPower,
-  //       }));
+  const data = (
+    await Promise.all(
+      REALMS_DELEGATIONS.map(async (realm) => {
+        const delegatorsRaw = await getDelegators(connection, realm);
+        const delegators = delegatorsRaw.map((delegate) => ({
+          pubkey: delegate.pubkey.toBase58(),
+          votingPower: delegate.votingPower.votingPower,
+        }));
 
-  //       return {
-  //         realm: realm.slug,
-  //         delegators,
-  //         totalVotingPower: delegatorsRaw.reduce(
-  //           (acc, delegate) => acc + delegate.votingPower.votingPower,
-  //           0
-  //         ),
-  //       };
-  //     })
-  //   )
-  // ).reduce((acc, val) => {
-  //   acc[val.realm] = val;
-  //   return acc;
-  // }, {} as Record<string, { realm: string; delegators: { pubkey: string; votingPower: number }[]; totalVotingPower: number }>);
+        return {
+          realm: realm.slug,
+          delegators,
+          totalVotingPower: delegatorsRaw.reduce(
+            (acc, delegate) => acc + delegate.votingPower.votingPower,
+            0
+          ),
+        };
+      })
+    )
+  ).reduce((acc, val) => {
+    acc[val.realm] = val;
+    return acc;
+  }, {} as Record<string, { realm: string; delegators: { pubkey: string; votingPower: number }[]; totalVotingPower: number }>);
 
-  // // console.log(JSON.stringify(data, null, 2));
-  // await saveDataToGitHub(
-  //   "stats.json",
-  //   JSON.stringify(data, null, 2),
-  //   Date.now()
-  // );
+  // console.log(JSON.stringify(data, null, 2));
+  await saveDataToGitHub(
+    "stats.json",
+    JSON.stringify(data, null, 2),
+    Date.now()
+  );
 
-  // // Cache solblaze data
-  // const solblazeData = await fetch(
-  //   "https://rewards.solblaze.org/api/v1/gauges"
-  // );
-  // const solblazeDataJson = await solblazeData.json();
-  // if (solblazeDataJson.validators.length > 0) {
-  //   await saveDataToGitHub(
-  //     "solblaze.json",
-  //     JSON.stringify(solblazeDataJson),
-  //     Date.now()
-  //   );
-  // }
+  // Cache solblaze data
+  const solblazeData = await fetch(
+    "https://rewards.solblaze.org/api/v1/gauges"
+  );
+  const solblazeDataJson = await solblazeData.json();
+  if (solblazeDataJson.validators.length > 0) {
+    await saveDataToGitHub(
+      "solblaze.json",
+      JSON.stringify(solblazeDataJson),
+      Date.now()
+    );
+  }
 
   // Tribeca data
   const client = createSolanaClient({ urlOrMoniker: process.env.RPC_URL! });
@@ -302,7 +302,7 @@ const run = async () => {
     delegators: vaultVoters,
     totalVotingPower: voters.reduce((acc, voter) => acc + Number(voter.voterPower / BigInt(1e6)), 0),
   }
-  
+
   await saveDataToGitHub(
     "tribecaStats.json",
     JSON.stringify({ vault: vaultData }, null, 2),
