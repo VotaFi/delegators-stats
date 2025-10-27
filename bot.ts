@@ -4,7 +4,6 @@ import {
   Program,
   Wallet,
 } from "@coral-xyz/anchor";
-import { Octokit } from "@octokit/rest";
 import {
   booleanFilter,
   getGovernanceAccounts,
@@ -20,8 +19,11 @@ import {
 } from "@solana/web3.js";
 import { PublicKey } from "@solana/web3.js";
 import _ from "lodash";
-import { IDL, VoterStakeRegistry } from "./realms";
+import { IDL, VoterStakeRegistry } from "./IDL/realms";
 import BigNumber from "bignumber.js";
+import { saveDataToGitHub } from "./helpers/github";
+import { getVoters } from "./helpers/tribeca/getVoters";
+import { createSolanaClient } from "gill";
 
 const GOVERNANCE_PROGRAM = new PublicKey(
   "GovER5Lthms3bLBqWub97yVrMmEogzX7xNjdXpPPCVZw"
@@ -50,45 +52,6 @@ export const REALMS_DELEGATIONS = [
     realmsId: new PublicKey("7vrFDrK9GRNX7YZXbo7N3kvta7Pbn6W1hCXQ6C7WBxG9"),
   },
 ];
-
-const saveDataToGitHub = async (
-  path: string,
-  data: string,
-  timestamp: number
-) => {
-  const octokit = new Octokit({
-    auth: process.env.G_TOKEN,
-  });
-
-  const owner = "VotaFi";
-  const repo = "delegators-stats";
-  const content = Buffer.from(data).toString("base64");
-
-  try {
-    // Get the SHA of the current file
-    const result = await octokit.request(
-      `GET /repos/${owner}/${repo}/contents/${path}`,
-      {
-        owner,
-        repo,
-        file_path: path,
-        branch: "main",
-      }
-    );
-
-    await octokit.repos.createOrUpdateFileContents({
-      owner,
-      repo,
-      path,
-      message: `Add data for timestamp ${timestamp}`,
-      content,
-      sha: result.data.sha,
-    });
-    console.log(`Data saved to GitHub at ${path}`);
-  } catch (error) {
-    console.error(`Failed to save data to GitHub: ${error}`);
-  }
-};
 
 const SIMULATION_WALLET = "ENmcpFCpxN1CqyUjuog9yyUVfdXBKF3LVCwLr7grJZpk";
 
@@ -283,49 +246,68 @@ const getDelegators = async (
 
 const run = async () => {
   const connection = new Connection(process.env.RPC_URL!);
-  const data = (
-    await Promise.all(
-      REALMS_DELEGATIONS.map(async (realm) => {
-        const delegatorsRaw = await getDelegators(connection, realm);
-        const delegators = delegatorsRaw.map((delegate) => ({
-          pubkey: delegate.pubkey.toBase58(),
-          votingPower: delegate.votingPower.votingPower,
-        }));
+  // const data = (
+  //   await Promise.all(
+  //     REALMS_DELEGATIONS.map(async (realm) => {
+  //       const delegatorsRaw = await getDelegators(connection, realm);
+  //       const delegators = delegatorsRaw.map((delegate) => ({
+  //         pubkey: delegate.pubkey.toBase58(),
+  //         votingPower: delegate.votingPower.votingPower,
+  //       }));
 
-        return {
-          realm: realm.slug,
-          delegators,
-          totalVotingPower: delegatorsRaw.reduce(
-            (acc, delegate) => acc + delegate.votingPower.votingPower,
-            0
-          ),
-        };
-      })
-    )
-  ).reduce((acc, val) => {
-    acc[val.realm] = val;
-    return acc;
-  }, {} as Record<string, { realm: string; delegators: { pubkey: string; votingPower: number }[]; totalVotingPower: number }>);
+  //       return {
+  //         realm: realm.slug,
+  //         delegators,
+  //         totalVotingPower: delegatorsRaw.reduce(
+  //           (acc, delegate) => acc + delegate.votingPower.votingPower,
+  //           0
+  //         ),
+  //       };
+  //     })
+  //   )
+  // ).reduce((acc, val) => {
+  //   acc[val.realm] = val;
+  //   return acc;
+  // }, {} as Record<string, { realm: string; delegators: { pubkey: string; votingPower: number }[]; totalVotingPower: number }>);
 
-  // console.log(JSON.stringify(data, null, 2));
+  // // console.log(JSON.stringify(data, null, 2));
+  // await saveDataToGitHub(
+  //   "stats.json",
+  //   JSON.stringify(data, null, 2),
+  //   Date.now()
+  // );
+
+  // // Cache solblaze data
+  // const solblazeData = await fetch(
+  //   "https://rewards.solblaze.org/api/v1/gauges"
+  // );
+  // const solblazeDataJson = await solblazeData.json();
+  // if (solblazeDataJson.validators.length > 0) {
+  //   await saveDataToGitHub(
+  //     "solblaze.json",
+  //     JSON.stringify(solblazeDataJson),
+  //     Date.now()
+  //   );
+  // }
+
+  // Tribeca data
+  const client = createSolanaClient({ urlOrMoniker: process.env.RPC_URL! });
+  const voters = await getVoters(client, "theVault");
+  const vaultVoters = voters.map((voter) => ({
+    pubkey: voter.escrowAddress.toString(),
+    votingPower: voter.voterPower.toString(),
+  }));
+  const vaultData = {
+    tribeca: "theVault",
+    delegators: vaultVoters,
+    totalVotingPower: voters.reduce((acc, voter) => acc + Number(voter.voterPower / BigInt(1e6)), 0),
+  }
+  
   await saveDataToGitHub(
-    "stats.json",
-    JSON.stringify(data, null, 2),
+    "tribecaStats.json",
+    JSON.stringify({ vault: vaultData }, null, 2),
     Date.now()
   );
-
-  // Cache solblaze data
-  const solblazeData = await fetch(
-    "https://rewards.solblaze.org/api/v1/gauges"
-  );
-  const solblazeDataJson = await solblazeData.json();
-  if (solblazeDataJson.validators.length > 0) {
-    await saveDataToGitHub(
-      "solblaze.json",
-      JSON.stringify(solblazeDataJson),
-      Date.now()
-    );
-  }
 };
 
 run();
