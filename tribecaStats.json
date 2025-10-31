@@ -4,21 +4,21 @@
     "delegators": [
       {
         "pubkey": "3u1MQioTZXSFbDoqMNry2VYSfRnE5unyyxg7pE19zMiv",
-        "votingPower": 0.138772,
+        "votingPower": 0.138768,
         "tokens": 0.014286
       },
       {
         "pubkey": "8NGdD1317but3FmKw1whfKYvU2umakSfdv9hnL1gnuuU",
-        "votingPower": 112.46058,
+        "votingPower": 112.458076,
         "tokens": 11.343007
       },
       {
         "pubkey": "ALaUoRrvNdQMzLdxxZ5Z9ugssE2ACKeZTqQGvivotvNn",
-        "votingPower": 56.229245,
+        "votingPower": 56.227993,
         "tokens": 5.671392
       }
     ],
-    "totalVotingPower": 168.828597,
+    "totalVotingPower": 168.824837,
     "totalTokens": 17.028685
   }
 }
