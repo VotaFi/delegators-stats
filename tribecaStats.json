@@ -3,47 +3,72 @@
     "tribeca": "theVault",
     "delegators": [
       {
+        "pubkey": "32iuR25rQvAMfcayGGZWbYcLNiNC3tYx2FFCzRvxKU7W",
+        "votingPower": 25272.13759,
+        "tokens": 19720.256351
+      },
+      {
         "pubkey": "3CbWhpndWpKT1gBTQ5x2DrzkSsNvfEjckfpvyJzsicfs",
-        "votingPower": 56.009867,
+        "votingPower": 56.009062,
         "tokens": 5.626687
       },
       {
         "pubkey": "3u1MQioTZXSFbDoqMNry2VYSfRnE5unyyxg7pE19zMiv",
-        "votingPower": 0.43496,
+        "votingPower": 0.434954,
         "tokens": 0.043841
       },
       {
         "pubkey": "6bwtzPPevQCK14iAbwB4jd5C9FTB57WLMd1kp7cDpSRb",
-        "votingPower": 492814.971419,
+        "votingPower": 492807.902937,
         "tokens": 49426.091656
       },
       {
         "pubkey": "8NGdD1317but3FmKw1whfKYvU2umakSfdv9hnL1gnuuU",
-        "votingPower": 111.973794,
+        "votingPower": 111.972172,
         "tokens": 11.343007
       },
       {
         "pubkey": "8dWA55RyktnRqoHGRW7CLhTYYkJKcLSjakqBfD15DyE8",
-        "votingPower": 82.225695,
+        "votingPower": 82.224513,
         "tokens": 8.260304
       },
       {
+        "pubkey": "98WejAMmJaPdfRNkEPsubo4gfr1q8X4J8TcqiTVBNiaA",
+        "votingPower": 184358.538952,
+        "tokens": 19710.42086
+      },
+      {
+        "pubkey": "9TKXyieDBo8FvzumvVkwaszFziJXqzXh33omYn6QWt88",
+        "votingPower": 11990.512275,
+        "tokens": 8498.007448
+      },
+      {
+        "pubkey": "9aCkGbRLwDGtjf42FSDAjGfuRvus147DMFsk3uXpkSky",
+        "votingPower": 24807.074729,
+        "tokens": 19357.924549
+      },
+      {
         "pubkey": "ALaUoRrvNdQMzLdxxZ5Z9ugssE2ACKeZTqQGvivotvNn",
-        "votingPower": 55.265404,
+        "votingPower": 55.264593,
         "tokens": 5.671392
       },
       {
+        "pubkey": "CA49wTHuXVANu7pUfXitjx5qEbFhEzQQMb6pCsoyWQ65",
+        "votingPower": 183743.039898,
+        "tokens": 19787.630477
+      },
+      {
         "pubkey": "Evi6Cuq6Sc4WPyW8pHF6YaH2gNhDY83bmJ83ymAhbxJ1",
-        "votingPower": 0.254015,
+        "votingPower": 0.253987,
         "tokens": 0.197104
       },
       {
         "pubkey": "Hwfx3XnbyjyBoi3uBwaWZ9XmWhEoh2bAZC8GvGB7JZnP",
-        "votingPower": 0.392717,
+        "votingPower": 0.39268,
         "tokens": 0.256195
       }
     ],
-    "totalVotingPower": 493121.527871,
-    "totalTokens": 49457.490186
+    "totalVotingPower": 923285.758342,
+    "totalTokens": 136531.729871
   }
 }
