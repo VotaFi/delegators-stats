@@ -4,41 +4,41 @@
     "delegators": [
       {
         "pubkey": "3CbWhpndWpKT1gBTQ5x2DrzkSsNvfEjckfpvyJzsicfs",
-        "votingPower": 56.011654,
+        "votingPower": 56.010279,
         "tokens": 5.626687
       },
       {
         "pubkey": "3u1MQioTZXSFbDoqMNry2VYSfRnE5unyyxg7pE19zMiv",
-        "votingPower": 0.434974,
+        "votingPower": 0.434963,
         "tokens": 0.043841
       },
       {
         "pubkey": "8NGdD1317but3FmKw1whfKYvU2umakSfdv9hnL1gnuuU",
-        "votingPower": 111.977396,
+        "votingPower": 111.974625,
         "tokens": 11.343007
       },
       {
         "pubkey": "8dWA55RyktnRqoHGRW7CLhTYYkJKcLSjakqBfD15DyE8",
-        "votingPower": 82.228318,
+        "votingPower": 82.2263,
         "tokens": 8.260304
       },
       {
         "pubkey": "ALaUoRrvNdQMzLdxxZ5Z9ugssE2ACKeZTqQGvivotvNn",
-        "votingPower": 55.267206,
+        "votingPower": 55.26582,
         "tokens": 5.671392
       },
       {
         "pubkey": "Evi6Cuq6Sc4WPyW8pHF6YaH2gNhDY83bmJ83ymAhbxJ1",
-        "votingPower": 0.254077,
+        "votingPower": 0.254029,
         "tokens": 0.197104
       },
       {
         "pubkey": "Hwfx3XnbyjyBoi3uBwaWZ9XmWhEoh2bAZC8GvGB7JZnP",
-        "votingPower": 0.392798,
+        "votingPower": 0.392736,
         "tokens": 0.256195
       }
     ],
-    "totalVotingPower": 306.56642300000004,
+    "totalVotingPower": 306.558752,
     "totalTokens": 31.398530000000004
   }
 }
