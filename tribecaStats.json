@@ -4,71 +4,76 @@
     "delegators": [
       {
         "pubkey": "32iuR25rQvAMfcayGGZWbYcLNiNC3tYx2FFCzRvxKU7W",
-        "votingPower": 25272.13759,
+        "votingPower": 25267.168756,
         "tokens": 19720.256351
       },
       {
         "pubkey": "3CbWhpndWpKT1gBTQ5x2DrzkSsNvfEjckfpvyJzsicfs",
-        "votingPower": 56.009062,
+        "votingPower": 56.007644,
         "tokens": 5.626687
       },
       {
         "pubkey": "3u1MQioTZXSFbDoqMNry2VYSfRnE5unyyxg7pE19zMiv",
-        "votingPower": 0.434954,
+        "votingPower": 0.434943,
         "tokens": 0.043841
       },
       {
         "pubkey": "6bwtzPPevQCK14iAbwB4jd5C9FTB57WLMd1kp7cDpSRb",
-        "votingPower": 492807.902937,
+        "votingPower": 492795.449242,
         "tokens": 49426.091656
       },
       {
         "pubkey": "8NGdD1317but3FmKw1whfKYvU2umakSfdv9hnL1gnuuU",
-        "votingPower": 111.972172,
+        "votingPower": 111.969313,
         "tokens": 11.343007
       },
       {
         "pubkey": "8dWA55RyktnRqoHGRW7CLhTYYkJKcLSjakqBfD15DyE8",
-        "votingPower": 82.224513,
+        "votingPower": 82.222432,
         "tokens": 8.260304
       },
       {
         "pubkey": "98WejAMmJaPdfRNkEPsubo4gfr1q8X4J8TcqiTVBNiaA",
-        "votingPower": 184358.538952,
+        "votingPower": 184353.572596,
         "tokens": 19710.42086
       },
       {
         "pubkey": "9TKXyieDBo8FvzumvVkwaszFziJXqzXh33omYn6QWt88",
-        "votingPower": 11990.512275,
+        "votingPower": 11988.371066,
         "tokens": 8498.007448
       },
       {
         "pubkey": "9aCkGbRLwDGtjf42FSDAjGfuRvus147DMFsk3uXpkSky",
-        "votingPower": 24807.074729,
+        "votingPower": 24802.19719,
         "tokens": 19357.924549
       },
       {
         "pubkey": "ALaUoRrvNdQMzLdxxZ5Z9ugssE2ACKeZTqQGvivotvNn",
-        "votingPower": 55.264593,
+        "votingPower": 55.263164,
         "tokens": 5.671392
       },
       {
         "pubkey": "CA49wTHuXVANu7pUfXitjx5qEbFhEzQQMb6pCsoyWQ65",
-        "votingPower": 183743.039898,
+        "votingPower": 183738.054088,
         "tokens": 19787.630477
       },
       {
         "pubkey": "Evi6Cuq6Sc4WPyW8pHF6YaH2gNhDY83bmJ83ymAhbxJ1",
-        "votingPower": 0.253987,
+        "votingPower": 0.253937,
         "tokens": 0.197104
       },
       {
+        "pubkey": "FaXgomvDc12iwiBrZxgLYPgC6YK7gsy6kwp84HG6vi8m",
+        "votingPower": 32646.440034,
+        "tokens": 25476.48878
+      },
+      {
         "pubkey": "Hwfx3XnbyjyBoi3uBwaWZ9XmWhEoh2bAZC8GvGB7JZnP",
-        "votingPower": 0.39268,
+        "votingPower": 0.392616,
         "tokens": 0.256195
       }
     ],
-    "totalVotingPower": 923285.758342,
-    "totalTokens": 136531.729871
+    "totalVotingPower": 955897.7970209998,
+    "totalTokens": 162008.21865099997
   }
 }
