@@ -3,14 +3,50 @@
     "realm": "solblaze",
     "delegators": [
       {
+        "pubkey": "2E9UZymK5P9wfkoJuzgWzCZPatokpeJ9n3F6uAR24roc",
+        "votingPower": 1026740.70832355
+      },
+      {
+        "pubkey": "7DhA5njUo8QPLzy4irqviZSY2MuLLRWy2Q4GfSLdpvzL",
+        "votingPower": 233944.39103457
+      },
+      {
+        "pubkey": "9uDmp5zMfuGsZredsddtaQ6MsF457ySYTiWN2oxR88x4",
+        "votingPower": 2564488.730777328
+      },
+      {
+        "pubkey": "9DkCyPEpVmFzwhvABdAigDdfdYdmg5mjwo76AXz72Dn9",
+        "votingPower": 152501.296503848
+      },
+      {
+        "pubkey": "3xBDD8onMMpNfGXzPmNeYyQBEpB2PYQJosV29GzcNgfd",
+        "votingPower": 12231.259355429
+      },
+      {
+        "pubkey": "Gsk5z6oCSLGixEFBaamJBzK4BHLbWKrD4v2qqrxPaS2J",
+        "votingPower": 555.419380891
+      },
+      {
+        "pubkey": "3fZGf9dN9zMqpwuvV5ttjr8DZtbZ12TMyy4mtKLk27de",
+        "votingPower": 8573.67149593
+      },
+      {
+        "pubkey": "G58RsXuaHNUoNksqyHAiYtSvnVbvPhQbeYtLwLLAvNqa",
+        "votingPower": 19554.653675798
+      },
+      {
+        "pubkey": "G75KyDayRx64qXRA4V2DMr7tzVGk6a79G5ecwMqi1Efe",
+        "votingPower": 0
+      },
+      {
         "pubkey": "AiaNSk4H2QWetmCqtoo9qtQp9f9NnxyCB4NiTpB4pWb2",
-        "votingPower": 306020492.66673017
+        "votingPower": 306215062.49686766
       },
       {
         "pubkey": "AMd2nnFYtPGkeEbUvyVtWRDkG3nrESCvNW4C43mEvWrF",
         "votingPower": 0
       }
     ],
-    "totalVotingPower": 306020492.66673017
+    "totalVotingPower": 310233652.627415
   }
 }
