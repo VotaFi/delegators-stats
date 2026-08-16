@@ -6,10 +6,14 @@ import {
 } from "@coral-xyz/anchor";
 import {
   booleanFilter,
-  getGovernanceAccounts,
+  deserializeBorsh,
+  getAccountTypes,
+  getGovernanceSchemaForAccount,
+  MemcmpFilter,
   pubkeyFilter,
   TokenOwnerRecord,
 } from "@solana/spl-governance";
+import bs58 from "bs58";
 import {
   ComputeBudgetProgram,
   Connection,
@@ -183,41 +187,98 @@ const realmsGetVotingPower = async (
   }
 };
 
-const getDelegators = async (
+// Paginated getProgramAccounts ("gpav2"): phase 1 fetches only the matching
+// pubkeys with an empty dataSlice (small response, avoids the RPC "Response
+// too large" failure that a single full getProgramAccounts call would hit),
+// then phase 2 fetches the full account data via getMultipleAccounts in
+// batches of 100 (the per-request cap) and deserializes them.
+const getDelegatedTokenOwnerRecords = async (
   connection: Connection,
-  realm: (typeof REALMS_DELEGATIONS)[number]
+  realm: (typeof REALMS_DELEGATIONS)[number],
+  delegateAddresses: PublicKey[]
 ) => {
   const realmFilter = pubkeyFilter(1, realm.realmsId);
   const hasDelegateFilter = booleanFilter(
     1 + 32 + 32 + 32 + 8 + 4 + 4 + 1 + 1 + 6,
     true
   );
-  const delegatedToUserFilter = pubkeyFilter(
-    1 + 32 + 32 + 32 + 8 + 4 + 4 + 1 + 1 + 6 + 1,
-    new PublicKey(VOTA_REALMS_DELEGATE_ADDRESS)
-  );
-  const delegatedToUserFilterOld = pubkeyFilter(
-    1 + 32 + 32 + 32 + 8 + 4 + 4 + 1 + 1 + 6 + 1,
-    new PublicKey(VOTA_REALMS_DELEGATE_ADDRESS_OLD)
-  );
-  if (!realmFilter || !delegatedToUserFilterOld || !delegatedToUserFilter)
+  const delegateFilters = delegateAddresses
+    .map((address) =>
+      pubkeyFilter(1 + 32 + 32 + 32 + 8 + 4 + 4 + 1 + 1 + 6 + 1, address)
+    )
+    .filter((filter): filter is MemcmpFilter => filter !== undefined);
+  if (!realmFilter || delegateFilters.length !== delegateAddresses.length)
     throw new Error(); // unclear why this would ever happen, probably it just cannot
 
-  const resultsOld = await getGovernanceAccounts(
-    connection,
-    GOVERNANCE_PROGRAM,
-    TokenOwnerRecord,
-    [realmFilter, hasDelegateFilter, delegatedToUserFilterOld]
-  );
-  const results = await getGovernanceAccounts(
-    connection,
-    GOVERNANCE_PROGRAM,
-    TokenOwnerRecord,
-    [realmFilter, hasDelegateFilter, delegatedToUserFilter]
-  );
+  const all: { pubkey: PublicKey; account: TokenOwnerRecord }[] = [];
+
+  for (const accountType of getAccountTypes(TokenOwnerRecord)) {
+    for (const delegateFilter of delegateFilters) {
+      // Phase 1: fetch only the matching pubkeys (no account data) per page.
+      const accounts = await connection.getProgramAccounts(GOVERNANCE_PROGRAM, {
+        commitment: connection.commitment,
+        filters: [
+          { memcmp: { offset: 0, bytes: bs58.encode([accountType]) } },
+          {
+            memcmp: {
+              offset: realmFilter.offset,
+              bytes: bs58.encode(realmFilter.bytes),
+            },
+          },
+          {
+            memcmp: {
+              offset: hasDelegateFilter.offset,
+              bytes: bs58.encode(hasDelegateFilter.bytes),
+            },
+          },
+          {
+            memcmp: {
+              offset: delegateFilter.offset,
+              bytes: bs58.encode(delegateFilter.bytes),
+            },
+          },
+        ],
+        dataSlice: { offset: 0, length: 0 },
+      });
+      const pubkeys = accounts.map((account) => account.pubkey);
+
+      // Phase 2: fetch the full data in paginated batches and deserialize.
+      const schema = getGovernanceSchemaForAccount(accountType);
+      for (const chunk of _.chunk(pubkeys, 100)) {
+        const infos = await connection.getMultipleAccountsInfo(
+          chunk,
+          connection.commitment
+        );
+        chunk.forEach((pubkey, i) => {
+          const info = infos[i];
+          if (!info) return;
+          try {
+            all.push({
+              pubkey,
+              account: deserializeBorsh(schema, TokenOwnerRecord, info.data),
+            });
+          } catch {
+            // skip records we can't deserialize (mirrors spl-governance)
+          }
+        });
+      }
+    }
+  }
+
+  return all;
+};
+
+const getDelegators = async (
+  connection: Connection,
+  realm: (typeof REALMS_DELEGATIONS)[number]
+) => {
+  const results = await getDelegatedTokenOwnerRecords(connection, realm, [
+    new PublicKey(VOTA_REALMS_DELEGATE_ADDRESS),
+    new PublicKey(VOTA_REALMS_DELEGATE_ADDRESS_OLD),
+  ]);
 
   const delegateVotingPower = await Promise.all(
-    [...results, ...resultsOld].map(async (result) => {
+    results.map(async (result) => {
       const votingPower = await realmsGetVotingPower(
         connection,
         result.account.governingTokenOwner,
