@@ -22,9 +22,9 @@ import {
   VersionedTransaction,
 } from "@solana/web3.js";
 import { PublicKey } from "@solana/web3.js";
-import _ from "lodash";
 import { IDL, VoterStakeRegistry } from "./IDL/realms";
 import BigNumber from "bignumber.js";
+import { getProgramAccountsV2 } from "./helpers/getProgramAccountsV2";
 import { saveDataToGitHub } from "./helpers/github";
 import { getVoters } from "./helpers/tribeca/getVoters";
 import { createSolanaClient } from "gill";
@@ -187,11 +187,6 @@ const realmsGetVotingPower = async (
   }
 };
 
-// Paginated getProgramAccounts ("gpav2"): phase 1 fetches only the matching
-// pubkeys with an empty dataSlice (small response, avoids the RPC "Response
-// too large" failure that a single full getProgramAccounts call would hit),
-// then phase 2 fetches the full account data via getMultipleAccounts in
-// batches of 100 (the per-request cap) and deserializes them.
 const getDelegatedTokenOwnerRecords = async (
   connection: Connection,
   realm: (typeof REALMS_DELEGATIONS)[number],
@@ -214,10 +209,10 @@ const getDelegatedTokenOwnerRecords = async (
 
   for (const accountType of getAccountTypes(TokenOwnerRecord)) {
     for (const delegateFilter of delegateFilters) {
-      // Phase 1: fetch only the matching pubkeys (no account data) per page.
-      const accounts = await connection.getProgramAccounts(GOVERNANCE_PROGRAM, {
-        commitment: connection.commitment,
-        filters: [
+      const accounts = await getProgramAccountsV2(
+        connection,
+        GOVERNANCE_PROGRAM,
+        [
           { memcmp: { offset: 0, bytes: bs58.encode([accountType]) } },
           {
             memcmp: {
@@ -237,30 +232,19 @@ const getDelegatedTokenOwnerRecords = async (
               bytes: bs58.encode(delegateFilter.bytes),
             },
           },
-        ],
-        dataSlice: { offset: 0, length: 0 },
-      });
-      const pubkeys = accounts.map((account) => account.pubkey);
+        ]
+      );
 
-      // Phase 2: fetch the full data in paginated batches and deserialize.
       const schema = getGovernanceSchemaForAccount(accountType);
-      for (const chunk of _.chunk(pubkeys, 100)) {
-        const infos = await connection.getMultipleAccountsInfo(
-          chunk,
-          connection.commitment
-        );
-        chunk.forEach((pubkey, i) => {
-          const info = infos[i];
-          if (!info) return;
-          try {
-            all.push({
-              pubkey,
-              account: deserializeBorsh(schema, TokenOwnerRecord, info.data),
-            });
-          } catch {
-            // skip records we can't deserialize (mirrors spl-governance)
-          }
-        });
+      for (const { pubkey, data } of accounts) {
+        try {
+          all.push({
+            pubkey,
+            account: deserializeBorsh(schema, TokenOwnerRecord, data),
+          });
+        } catch {
+          // skip records we can't deserialize (mirrors spl-governance)
+        }
       }
     }
   }
