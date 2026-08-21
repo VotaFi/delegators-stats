@@ -210,8 +210,11 @@ const getDelegatedTokenOwnerRecords = async (
   for (const accountType of getAccountTypes(TokenOwnerRecord)) {
     for (const delegateFilter of delegateFilters) {
       const accounts = await getProgramAccountsV2(
-        connection,
-        GOVERNANCE_PROGRAM,
+        {
+          rpcEndpoint: connection.rpcEndpoint,
+          commitment: connection.commitment,
+        },
+        GOVERNANCE_PROGRAM.toBase58(),
         [
           { memcmp: { offset: 0, bytes: bs58.encode([accountType]) } },
           {
@@ -239,7 +242,7 @@ const getDelegatedTokenOwnerRecords = async (
       for (const { pubkey, data } of accounts) {
         try {
           all.push({
-            pubkey,
+            pubkey: new PublicKey(pubkey),
             account: deserializeBorsh(schema, TokenOwnerRecord, data),
           });
         } catch {
@@ -290,7 +293,8 @@ const getDelegators = async (
 };
 
 const run = async () => {
-  const connection = new Connection(process.env.RPC_URL!);
+  const rpcEndpoint = process.env.RPC_URL!;
+  const connection = new Connection(rpcEndpoint);
   const data = (
     await Promise.all(
       REALMS_DELEGATIONS.map(async (realm) => {
@@ -336,8 +340,8 @@ const run = async () => {
   }
 
   // Tribeca data
-  const client = createSolanaClient({ urlOrMoniker: process.env.RPC_URL! });
-  const voters = await getVoters(client, "theVault");
+  const client = createSolanaClient({ urlOrMoniker: rpcEndpoint });
+  const voters = await getVoters(client, rpcEndpoint, "theVault");
   const vaultVoters = voters.map((voter) => ({
     pubkey: voter.escrowAddress.toString(),
     votingPower: Number(voter.voterPower) / 1e6,

@@ -1,6 +1,5 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { Connection, PublicKey } from "@solana/web3.js";
 import { getProgramAccountsV2 } from "./getProgramAccountsV2";
 
 test("fetches every getProgramAccountsV2 page", async () => {
@@ -44,8 +43,8 @@ test("fetches every getProgramAccountsV2 page", async () => {
   };
 
   const accounts = await getProgramAccountsV2(
-    new Connection("https://rpc.example.com", "confirmed"),
-    new PublicKey("GovER5Lthms3bLBqWub97yVrMmEogzX7xNjdXpPPCVZw"),
+    { rpcEndpoint: "https://rpc.example.com", commitment: "confirmed" },
+    "GovER5Lthms3bLBqWub97yVrMmEogzX7xNjdXpPPCVZw",
     [{ dataSize: 123 }],
     fetchFn
   );
@@ -56,6 +55,10 @@ test("fetches every getProgramAccountsV2 page", async () => {
   );
   assert.equal(requests.length, 3);
   assert.equal(requests[0].method, "getProgramAccountsV2");
+  assert.equal(
+    (requests[0].params as [string, Record<string, unknown>])[1].commitment,
+    "confirmed"
+  );
   assert.equal(
     (requests[0].params as [string, Record<string, unknown>])[1].paginationKey,
     undefined

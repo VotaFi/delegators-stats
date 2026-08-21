@@ -1,8 +1,17 @@
-import {
-  Connection,
-  GetProgramAccountsFilter,
-  PublicKey,
-} from "@solana/web3.js";
+export type ProgramAccountsV2Filter =
+  | { dataSize: number }
+  | {
+      memcmp: {
+        offset: number;
+        bytes: string;
+        encoding?: "base58" | "base64";
+      };
+    };
+
+type RpcConnection = {
+  rpcEndpoint: string;
+  commitment?: string;
+};
 
 type ProgramAccountsV2Response = {
   result?: {
@@ -18,18 +27,18 @@ type ProgramAccountsV2Response = {
   };
 };
 
-type FetchFn = (
+export type FetchFn = (
   input: string | URL | Request,
   init?: RequestInit
 ) => Promise<Response>;
 
 export const getProgramAccountsV2 = async (
-  connection: Connection,
-  programId: PublicKey,
-  filters: GetProgramAccountsFilter[],
+  connection: RpcConnection,
+  programId: string,
+  filters: ProgramAccountsV2Filter[],
   fetchFn: FetchFn = fetch
 ) => {
-  const accounts: { pubkey: PublicKey; data: Buffer }[] = [];
+  const accounts: { pubkey: string; data: Buffer }[] = [];
   let paginationKey: string | null = null;
 
   do {
@@ -41,9 +50,11 @@ export const getProgramAccountsV2 = async (
         id: "get-program-accounts-v2",
         method: "getProgramAccountsV2",
         params: [
-          programId.toBase58(),
+          programId,
           {
-            commitment: connection.commitment,
+            ...(connection.commitment
+              ? { commitment: connection.commitment }
+              : {}),
             encoding: "base64",
             filters,
             limit: 1000,
@@ -71,7 +82,7 @@ export const getProgramAccountsV2 = async (
 
     accounts.push(
       ...body.result.accounts.map(({ pubkey, account }) => ({
-        pubkey: new PublicKey(pubkey),
+        pubkey,
         data: Buffer.from(account.data[0], "base64"),
       }))
     );

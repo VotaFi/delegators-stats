@@ -2,8 +2,8 @@ import { SupportedMarket, LOCKER } from './constants';
 import {
     SolanaClient,
     Address,
-    GetProgramAccountsApi,
-    getBase64Encoder, Base58EncodedBytes,
+    address,
+    getBase64Encoder,
 } from 'gill';
 import {
     LOCKED_VOTER_PROGRAM_ADDRESS,
@@ -14,8 +14,8 @@ import {
 } from '../../clients/locked-voter/src';
 import { getDelegate } from './pdas';
 import { calculateVoterPower } from './voterPower';
+import { FetchFn, getProgramAccountsV2 } from '../getProgramAccountsV2';
 
-type GetProgramAccountsConfig = Parameters<GetProgramAccountsApi['getProgramAccounts']>[1];
 type EscrowInfo = {
     escrowAddress: Address;
     owner: Address;
@@ -25,7 +25,9 @@ type EscrowInfo = {
 
 export const getVoters = async (
     client: SolanaClient,
+    rpcEndpoint: string,
     market: SupportedMarket,
+    fetchFn: FetchFn = fetch,
 ): Promise<EscrowInfo[]> => {
     // Get encoders and decoders
     const base64Encoder = getBase64Encoder();
@@ -53,41 +55,35 @@ export const getVoters = async (
         throw new Error('Locker account not found');
     }
 
-    const getProgramAccountsConfig: GetProgramAccountsConfig
-        & Readonly<{ encoding: "base64", withContext: true}> = {
-        filters: [
-            {
-                dataSize: BigInt(getEscrowSize())
-            },
-            {
-                memcmp: {
-                    offset: BigInt(129),
-                    bytes: delegate as string as Base58EncodedBytes,
-                    encoding: 'base58'
-                },
-            }
-        ],
-        encoding: 'base64',
-        withContext: true
-    };
-
-
     try {
-        const {value: accounts}= await client.rpc.getProgramAccounts(
+        const accounts = await getProgramAccountsV2(
+            {rpcEndpoint},
             LOCKED_VOTER_PROGRAM_ADDRESS,
-            getProgramAccountsConfig,
-        ).send();
+            [
+                {
+                    dataSize: getEscrowSize()
+                },
+                {
+                    memcmp: {
+                        offset: 129,
+                        bytes: delegate,
+                        encoding: 'base58'
+                    },
+                }
+            ],
+            fetchFn,
+        );
 
         const escrows: EscrowInfo[] = [];
         const now = BigInt(Math.floor(Date.now() / 1000));
 
-        for (const { pubkey, account } of accounts) {
+        for (const { pubkey, data } of accounts) {
             try {
-                const parsedAccount = escrowDecoder.decode(base64Encoder.encode(account.data[0] as string));
+                const parsedAccount = escrowDecoder.decode(data);
                 const voterPower = calculateVoterPower(decodedLocker, parsedAccount, now) ?? BigInt(0);
 
                 escrows.push({
-                    escrowAddress: pubkey,
+                    escrowAddress: address(pubkey),
                     owner: parsedAccount.owner,
                     escrow: parsedAccount,
                     voterPower,
