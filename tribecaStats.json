@@ -4,67 +4,67 @@
     "delegators": [
       {
         "pubkey": "2JMGJHAPq6jhvj6Bq9eQ3kGe52P1eaH5YEnBJhDdc6xJ",
-        "votingPower": 66.67163,
+        "votingPower": 66.486102,
         "tokens": 77.124318
       },
       {
         "pubkey": "2kt6gAVuKor9dt1NSekHCkKY8Hr7aWS3ckrTioidZPu8",
-        "votingPower": 301.077577,
+        "votingPower": 289.470707,
         "tokens": 4825.001389
       },
       {
         "pubkey": "3ALpXnGjKJBdXUeXsFkZRqDY9UhUSQsNM38K3gqNbGHp",
-        "votingPower": 18497.613318,
+        "votingPower": 18484.358454,
         "tokens": 5510.075864
       },
       {
         "pubkey": "3CbWhpndWpKT1gBTQ5x2DrzkSsNvfEjckfpvyJzsicfs",
-        "votingPower": 45.446543,
+        "votingPower": 45.433007,
         "tokens": 5.626687
       },
       {
         "pubkey": "3CzyJQCE7brByQhL9UnHVMRQN5NYK7SSgqvSvg4Gi2e4",
-        "votingPower": 28837.511504,
+        "votingPower": 28829.119462,
         "tokens": 3488.590481
       },
       {
         "pubkey": "3PzrmskMm5ZJ88VkAkAhQvEFRG7AmX1k4Uswxpcw94Bi",
-        "votingPower": 2510.14519,
+        "votingPower": 2509.431081,
         "tokens": 296.856468
       },
       {
         "pubkey": "48R3VKAwyx53dncp8Q5Mamk13YY6PzqyFZHQS1arRQgX",
-        "votingPower": 18116.853313,
+        "votingPower": 18112.053006,
         "tokens": 1995.49805
       },
       {
         "pubkey": "5hYh2UVgUYB65u7KUzt1aHjU7La9o4CK1gUo6SPZjfZz",
-        "votingPower": 760.667169,
+        "votingPower": 760.440366,
         "tokens": 94.28224
       },
       {
         "pubkey": "7TUUMx3GARsuKKEFWXS8EeNyaMtEv7E5yhNrkt5SUmaJ",
-        "votingPower": 59.205844,
+        "votingPower": 59.113037,
         "tokens": 38.57977
       },
       {
         "pubkey": "8NGdD1317but3FmKw1whfKYvU2umakSfdv9hnL1gnuuU",
-        "votingPower": 90.678872,
+        "votingPower": 90.651586,
         "tokens": 11.343007
       },
       {
         "pubkey": "8Wn4CtZwS4kngiF38t3zRSateTHEveFxZfb6hbPKXUre",
-        "votingPower": 2641.377382,
+        "votingPower": 2640.720459,
         "tokens": 273.084358
       },
       {
         "pubkey": "8dWA55RyktnRqoHGRW7CLhTYYkJKcLSjakqBfD15DyE8",
-        "votingPower": 66.71812,
+        "votingPower": 66.69825,
         "tokens": 8.260304
       },
       {
         "pubkey": "ALVbfTU9odZ4GXAPMdXJ4NxjmQq7QJDNkn2Mhb5rcWpc",
-        "votingPower": 51505.683128,
+        "votingPower": 51491.458714,
         "tokens": 5913.120345
       },
       {
@@ -74,22 +74,22 @@
       },
       {
         "pubkey": "Bfs4TDs6NkBmgc9m3eskUbY1bHAAu2tdeka3yRJtht49",
-        "votingPower": 51421.211376,
+        "votingPower": 51406.57654,
         "tokens": 6083.733315
       },
       {
         "pubkey": "BkbNWJPYcRVGSRKFSyBGkFKXDWQSDfBRc7ZRidnm7G4R",
-        "votingPower": 55034.144198,
+        "votingPower": 55018.07422,
         "tokens": 6680.325512
       },
       {
         "pubkey": "C7ir9rSCjDSSTqYo2F85sR4mNMQaZ1Dv17k1NFdNiwti",
-        "votingPower": 46.294261,
+        "votingPower": 46.213749,
         "tokens": 33.46911
       },
       {
         "pubkey": "CgVEcVEUee3LVPUHjkH2VhaKgVxqUKy9ziAK3p86cYht",
-        "votingPower": 297525.787604,
+        "votingPower": 297436.963277,
         "tokens": 36924.467957
       },
       {
@@ -99,17 +99,17 @@
       },
       {
         "pubkey": "DVUFq24iACif9h4D3FAYriWX2ULSAzbJzS1A3MwrNeMF",
-        "votingPower": 55034.123634,
+        "votingPower": 55018.053656,
         "tokens": 6680.32533
       },
       {
         "pubkey": "EjGr7E6mv8orFXH5FeWatG3Rr1uifivgM9zBpo5vRCCr",
-        "votingPower": 7337911.434822,
+        "votingPower": 7335790.799778,
         "tokens": 881552.644836
       },
       {
         "pubkey": "EpGve7Tr9ZMNdEXW2Fc7R43riGsmoC4kKwNNBzP65Kug",
-        "votingPower": 7227893.908903,
+        "votingPower": 7225805.071007,
         "tokens": 868334.500634
       },
       {
@@ -118,18 +118,23 @@
         "tokens": 0.197104
       },
       {
+        "pubkey": "FAPNHaNJ6PMr3gRYbnWz3rcYdRZfCcP7NXCBXWuAwP1k",
+        "votingPower": 564699.947982,
+        "tokens": 56564.801107
+      },
+      {
         "pubkey": "FaXgomvDc12iwiBrZxgLYPgC6YK7gsy6kwp84HG6vi8m",
         "votingPower": 0,
         "tokens": 25476.48878
       },
       {
         "pubkey": "G4MLjEbRW1cXgwnYRrebhbu4UjrrvBwyK1vWn2pEWRDx",
-        "votingPower": 0.394254,
+        "votingPower": 0.394134,
         "tokens": 0.050076
       },
       {
         "pubkey": "GuHS9spURKvjZ5EQLwFSLScKJwGyqw9rwq4BjHKqW8Fe",
-        "votingPower": 43.659596,
+        "votingPower": 43.592892,
         "tokens": 27.729049
       },
       {
@@ -139,7 +144,7 @@
       },
       {
         "pubkey": "HBfhGdEhwz1m7gNLkpScPVAekfBy2ZcKQ6b1pEJjxpDb",
-        "votingPower": 7082.4257,
+        "votingPower": 7070.052678,
         "tokens": 5143.492466
       },
       {
@@ -153,7 +158,7 @@
         "tokens": 1676.687277
       }
     ],
-    "totalVotingPower": 15155493.033938,
-    "totalTokens": 1881254.4459509996
+    "totalVotingPower": 15715781.174144002,
+    "totalTokens": 1937819.2470579997
   }
 }
